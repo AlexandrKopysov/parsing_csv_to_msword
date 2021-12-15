@@ -4,9 +4,9 @@ using System.Text;
 
 namespace csv_to_word_v1.Model
 {
- /// <summary>
- /// Модель данных , взятых из csv файла
- /// </summary>
+    /// <summary>
+    /// Модель данных , взятых из csv файла
+    /// </summary>
     public class DataModel
     {
         /// <summary>
@@ -44,7 +44,7 @@ namespace csv_to_word_v1.Model
         /// <summary>
         /// Дата формирования паспорта
         /// </summary>
-        public DateTime dateTime { get; set; }
+        public string dateTime { get; set; }
         /// <summary>
         /// Оператор
         /// </summary>
@@ -61,11 +61,14 @@ namespace csv_to_word_v1.Model
         /// <summary>
         /// Путь до файла шаблона
         /// </summary>
-        public string fileTemplate { get; set; }        
+        public string fileTemplate { get; set; }
+        /// <summary>
+        /// Путь до csv файла
+        /// </summary>
+        public string fileCsv { get; set; }
         /// <summary>
         /// Массив строк
         /// </summary>
-        public Array dataArray { get; set; }
-
+        public List<Row> dataArray { get; set; }        
     }
 }

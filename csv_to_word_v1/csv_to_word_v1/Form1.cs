@@ -24,12 +24,20 @@ namespace csv_to_word_v1
 
         private void change_button_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK)
+            OpenFileDialog templateFile = new OpenFileDialog();
+            if (templateFile.ShowDialog() == DialogResult.OK)
             {
-                data.fileTemplate = ofd.FileName;                
+                data.fileTemplate = templateFile.FileName;                
+            }
+            OpenFileDialog csvFile = new OpenFileDialog();
+            if (csvFile.ShowDialog() == DialogResult.OK)
+            {
+                data.fileCsv = csvFile.FileName;
             }
             var word = new Word(data.fileTemplate);
+            
+            Csv csv = new Csv(data);
+            data = csv.Import();
 
             var items = new Dictionary<string, string>
             {
@@ -41,7 +49,7 @@ namespace csv_to_word_v1
                 {"<fileScanGeometry>", data.fileScanGeometry},
                 {"<fileScandeffect>", data.fileScandeffect},
                 {"<fileSpectr>", data.fileSpectr},
-                {"<dateTime>", data.dateTime.ToString("dd.mm.yyyy")},
+                {"<dateTime>", data.dateTime},
                 {"<owner>", data.owner}
             };
 
