@@ -6,9 +6,9 @@ namespace csv_to_word_v1.Services
 {
     public class Csv
     {
-        public Array Import(string filePath)
-        {
+        //public Array Import(string filePath)
+        //{
 
-        }
+        //}
     }
 }
