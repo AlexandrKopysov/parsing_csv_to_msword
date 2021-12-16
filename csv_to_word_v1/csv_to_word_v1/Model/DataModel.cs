@@ -69,6 +69,10 @@ namespace csv_to_word_v1.Model
         /// <summary>
         /// Массив строк
         /// </summary>
-        public List<Row> dataArray { get; set; }        
+        public List<Row> dataArray { get; set; }
+        /// <summary>
+        /// Массив строк
+        /// </summary>
+        public List<SectionModel> sectionArray { get; set; }
     }
 }

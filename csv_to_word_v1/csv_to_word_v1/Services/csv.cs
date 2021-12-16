@@ -5,12 +5,14 @@ using System.Text;
 using static csv_to_word_v1.Model.DataModel;
 using static csv_to_word_v1.Model.Row;
 using Microsoft.VisualBasic.FileIO;
-
+using System.Linq;
 
 namespace csv_to_word_v1.Services
 {
+    
     public class Csv
     {
+        
         private DataModel data;
         public Csv(DataModel data)
         {
@@ -20,6 +22,38 @@ namespace csv_to_word_v1.Services
         {
             getParametersStatic();
             getParametersRows();
+            //getAverageDiametr();
+            groupByX_MM();
+            return data;
+        }
+
+        private DataModel groupByX_MM()
+        {
+            var groupFi = data.dataArray.GroupBy(x => x.X_MM).ToArray();
+
+            List<SectionModel> sectionArray = new List<SectionModel>();
+            foreach (var group in groupFi)
+            {
+                SectionModel scectionModel = new SectionModel();
+                scectionModel.key = Convert.ToInt32(group.Key);
+                scectionModel.averagInSection = Math.Round(group.Select(x => x.Diameter).Average(), 4);
+                sectionArray.Add(scectionModel);                
+            }
+            data.sectionArray = sectionArray;
+            data.averageDiametr = (float)Math.Round(
+                Convert.ToDouble(data.sectionArray.Select(x => x.averagInSection).ToArray().Average()), 4);
+            foreach(var group in data.sectionArray)
+            {
+                //group.averageNonRoundless = 
+            }
+
+            return data;
+        }
+
+        private DataModel getAverageDiametr()
+        {
+            var arrayDiamter = data.dataArray.Select(x => x.X_MM).ToArray();
+            data.averageDiametr = (float)Math.Round(Convert.ToDouble(arrayDiamter.Average()),4);
             return data;
         }
 
