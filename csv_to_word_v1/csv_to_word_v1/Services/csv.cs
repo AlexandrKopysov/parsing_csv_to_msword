@@ -29,23 +29,40 @@ namespace csv_to_word_v1.Services
 
         private DataModel groupByX_MM()
         {
-            var groupFi = data.dataArray.GroupBy(x => x.X_MM).ToArray();
-
+            var groupX_MM = data.dataArray.GroupBy(x => x.X_MM).ToArray();
+            double dMax = -10000;
+            double dMin = 10000;
             List<SectionModel> sectionArray = new List<SectionModel>();
-            foreach (var group in groupFi)
+            foreach (var group in groupX_MM)
             {
                 SectionModel scectionModel = new SectionModel();
                 scectionModel.key = Convert.ToInt32(group.Key);
                 scectionModel.averagInSection = Math.Round(group.Select(x => x.Diameter).Average(), 4);
-                sectionArray.Add(scectionModel);                
+                scectionModel.dMax = Math.Round(group.Select(x => x.Diameter).Max(), 4);
+                scectionModel.dMin = Math.Round(group.Select(x => x.Diameter).Min(), 4);
+
+                sectionArray.Add(scectionModel);
+                dMax = dMax < scectionModel.dMax ? scectionModel.dMax : dMax;
+                dMin = dMin > scectionModel.dMin ? scectionModel.dMin : dMin;
             }
             data.sectionArray = sectionArray;
-            data.averageDiametr = (float)Math.Round(
+            data.averageDiametr = Math.Round(
                 Convert.ToDouble(data.sectionArray.Select(x => x.averagInSection).ToArray().Average()), 4);
-            foreach(var group in data.sectionArray)
-            {
-                //group.averageNonRoundless = 
+            
+            foreach (var group in data.sectionArray)
+            {                
+                group.averageNonRoundless = Math.Round(((group.dMax - group.dMin) / data.averageDiametr) * 100, 4);
+                group.averageDeviationDiametr = Math.Round(Math.Pow((group.averagInSection - data.averageDiametr),2),4);
             }
+            
+            data.averageNonRoundless = Math.Round(data.sectionArray.Select(x => x.averageNonRoundless).ToArray().Average(), 4);
+            //double k = data.sectionArray.Select(x => x.averageDeviationDiametr).Sum()/ data.sectionArray.Count();
+            data.averageDeviationDiametr = Math.Round(
+                Math.Sqrt(data.sectionArray
+                .Select(x => x.averageDeviationDiametr).Sum() / (data.sectionArray.Count()-1)), 4);
+
+            data.dMax = dMax;
+            data.dMin = dMin;            
 
             return data;
         }

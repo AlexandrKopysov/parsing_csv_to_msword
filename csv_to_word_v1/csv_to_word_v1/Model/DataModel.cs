@@ -16,19 +16,23 @@ namespace csv_to_word_v1.Model
         /// <summary>
         /// Средневзвешенный диаметр по длине
         /// </summary>
-        public float averageDiametr { get; set; }
+        public double averageDiametr { get; set; }
+        /// <summary>
+        /// Среднеквадратичное отклонение диаметра по длине
+        /// </summary>
+        public double averageDeviationDiametr { get; set; }
         /// <summary>
         /// Относительное среднее значение некруглости по длине
         /// </summary>
-        public float averageNonRoundless { get; set; }
+        public double averageNonRoundless { get; set; }
         /// <summary>
         /// Максимальное значение диаметра
         /// </summary>
-        public float dMax { get; set; }
+        public double dMax { get; set; }
         /// <summary>
         /// Минимальное значение диаметра
         /// </summary>
-        public float dMin { get; set; }
+        public double dMin { get; set; }
         /// <summary>
         /// Путь к файлу сканирования геометрии
         /// </summary>

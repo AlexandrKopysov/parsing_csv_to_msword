@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj": {}
+    "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj": {}
   },
   "projects": {
-    "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj": {
+    "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
+        "projectUniqueName": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
         "projectName": "csv_to_word_v1",
-        "projectPath": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
+        "projectPath": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
         "packagesPath": "C:\\Users\\bayze\\.nuget\\packages\\",
-        "outputPath": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\obj\\",
+        "outputPath": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

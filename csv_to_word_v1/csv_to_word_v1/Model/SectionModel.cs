@@ -21,5 +21,17 @@ namespace csv_to_word_v1.Model
         /// Относительное среднее значение некруглости по срезу:
         /// </summary>
         public double averageNonRoundless { get; set; }
+        /// <summary>
+        /// Среднеквадратичное отклонение диаметра по длине
+        /// </summary>
+        public double averageDeviationDiametr { get; set; }
+        /// <summary>
+        /// Максимальное значение по срезу
+        /// </summary>
+        public double dMax { get; set; }
+        /// <summary>
+        /// Минимальное значение по срезу
+        /// </summary>
+        public double dMin { get; set; }
     }
 }

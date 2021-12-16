@@ -34,3 +34,21 @@ D:\Git\parsing_csv_to_msword\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1
 D:\Git\parsing_csv_to_msword\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.dll
 D:\Git\parsing_csv_to_msword\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.pdb
 D:\Git\parsing_csv_to_msword\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.genruntimeconfig.cache
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\bin\Debug\netcoreapp3.1\csv_to_word_v1.exe
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\bin\Debug\netcoreapp3.1\csv_to_word_v1.deps.json
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\bin\Debug\netcoreapp3.1\csv_to_word_v1.runtimeconfig.json
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\bin\Debug\netcoreapp3.1\csv_to_word_v1.runtimeconfig.dev.json
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\bin\Debug\netcoreapp3.1\csv_to_word_v1.dll
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\bin\Debug\netcoreapp3.1\csv_to_word_v1.pdb
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\bin\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Word.dll
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.csprojAssemblyReference.cache
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Word.dll
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.csproj.ResolveComReference.cache
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.scanPasport.resources
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.csproj.GenerateResource.cache
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.AssemblyInfoInputs.cache
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.AssemblyInfo.cs
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.csproj.CoreCompileInputs.cache
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.dll
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.pdb
+D:\Git\parsing_csv_to_msword\parsing_csv_to_msword (1)\parsing_csv_to_msword\csv_to_word_v1\csv_to_word_v1\obj\Debug\netcoreapp3.1\csv_to_word_v1.genruntimeconfig.cache

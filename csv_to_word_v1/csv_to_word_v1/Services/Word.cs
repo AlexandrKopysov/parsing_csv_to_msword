@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using WordOffice = Microsoft.Office.Interop.Word;
 
 namespace csv_to_word_v1.Services
@@ -60,13 +61,13 @@ namespace csv_to_word_v1.Services
                     DateTime.Now.ToString("yyyyMMdd HHmmss") + _fileInfo.Name);
 
                 app.ActiveDocument.SaveAs2(newFileName);
-                app.ActiveDocument.Close();
                 app.ActiveDocument.Close();                
-
+                MessageBox.Show("Файл успешно сформирован");
                 return true;
             }
             catch(Exception ex)
             {
+                MessageBox.Show("Ошибка \n" + ex.Message);
                 Console.WriteLine(ex.Message);
                 return false;
             }

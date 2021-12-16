@@ -44,6 +44,7 @@ namespace csv_to_word_v1
                 {"<pasportNumber>", data.pasportNumber},
                 {"<averageDiametr>", data.averageDiametr.ToString()},
                 {"<averageNonRoundless>", data.averageNonRoundless.ToString()},
+                {"<averageDeviationDiametr>", data.averageDeviationDiametr.ToString()},
                 {"<dMax>", data.dMax.ToString()},
                 {"<dMin>", data.dMin.ToString()},
                 {"<fileScanGeometry>", data.fileScanGeometry},
@@ -54,8 +55,6 @@ namespace csv_to_word_v1
             };
 
             word.Process(items);
-
-
         }
 
         private void fileScanGeometry_button_Click(object sender, EventArgs e)
@@ -63,8 +62,7 @@ namespace csv_to_word_v1
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                data.fileScanGeometry = ofd.FileName;                
-                fileScanGeometry_textBox.Text = data.fileScanGeometry;
+                data.fileScanGeometry = ofd.FileName;                                
             }
         }
 
@@ -73,8 +71,7 @@ namespace csv_to_word_v1
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                data.fileScandeffect = ofd.FileName;
-                fileScandeffect_textBox.Text = data.fileScandeffect;
+                data.fileScandeffect = ofd.FileName;                
             }
         }
 
@@ -83,8 +80,7 @@ namespace csv_to_word_v1
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                data.fileSpectr = ofd.FileName;
-                fileSpectr_textBox.Text = data.fileSpectr;
+                data.fileSpectr = ofd.FileName;                
             }
         }
     }
