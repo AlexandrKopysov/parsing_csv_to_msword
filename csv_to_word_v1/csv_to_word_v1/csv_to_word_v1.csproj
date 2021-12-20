@@ -18,4 +18,8 @@
     </COMReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.DocIO.Wpf" Version="19.4.0.38" />
+  </ItemGroup>
+
 </Project>

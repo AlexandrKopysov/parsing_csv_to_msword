@@ -1,30 +1,196 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Syncfusion.Compression.Base/19.4.0.38": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.Compression.Base.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Compression.Base.dll": {}
+        }
+      },
+      "Syncfusion.DocIO.Wpf/19.4.0.38": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Compression.Base": "19.4.0.38",
+          "Syncfusion.Licensing": "19.4.0.38",
+          "Syncfusion.OfficeChart.Base": "19.4.0.38"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.DocIO.Base.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.DocIO.Base.dll": {}
+        }
+      },
+      "Syncfusion.Licensing/19.4.0.38": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.OfficeChart.Base/19.4.0.38": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Compression.Base": "19.4.0.38"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.OfficeChart.Base.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.OfficeChart.Base.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Syncfusion.Compression.Base/19.4.0.38": {
+      "sha512": "y0FRrLKuv8FOEUR/QL8LuO9qqjZ+5yeFrfGrSUvgV/g1abeBohOyX+vpL8hLm+3Al391c89+0KXnaMSWdTigCA==",
+      "type": "package",
+      "path": "syncfusion.compression.base/19.4.0.38",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/net20/Syncfusion.Compression.Base.dll",
+        "lib/net20/Syncfusion.Compression.Base.xml",
+        "lib/net35/Syncfusion.Compression.Base.dll",
+        "lib/net35/Syncfusion.Compression.Base.xml",
+        "lib/net40/Syncfusion.Compression.Base.dll",
+        "lib/net40/Syncfusion.Compression.Base.xml",
+        "lib/net45/Syncfusion.Compression.Base.dll",
+        "lib/net45/Syncfusion.Compression.Base.xml",
+        "lib/net451/Syncfusion.Compression.Base.dll",
+        "lib/net451/Syncfusion.Compression.Base.xml",
+        "lib/net46/Syncfusion.Compression.Base.dll",
+        "lib/net46/Syncfusion.Compression.Base.xml",
+        "lib/net5.0/Syncfusion.Compression.Base.dll",
+        "lib/net5.0/Syncfusion.Compression.Base.xml",
+        "lib/netcoreapp3.1/Syncfusion.Compression.Base.dll",
+        "lib/netcoreapp3.1/Syncfusion.Compression.Base.xml",
+        "syncfusion.compression.base.19.4.0.38.nupkg.sha512",
+        "syncfusion.compression.base.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.DocIO.Wpf/19.4.0.38": {
+      "sha512": "afJsIJ9A2P/fzenadPwPn7sNNdtvfEZz4LxKx+AfwnOKDftAz0zJqoh+faKu6qOHrZLV/SPCt4U5YBHwLije9Q==",
+      "type": "package",
+      "path": "syncfusion.docio.wpf/19.4.0.38",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net35/Syncfusion.DocIO.Base.dll",
+        "lib/net35/Syncfusion.DocIO.Base.xml",
+        "lib/net40/Syncfusion.DocIO.Base.dll",
+        "lib/net40/Syncfusion.DocIO.Base.xml",
+        "lib/net45/Syncfusion.DocIO.Base.dll",
+        "lib/net45/Syncfusion.DocIO.Base.xml",
+        "lib/net451/Syncfusion.DocIO.Base.dll",
+        "lib/net451/Syncfusion.DocIO.Base.xml",
+        "lib/net46/Syncfusion.DocIO.Base.dll",
+        "lib/net46/Syncfusion.DocIO.Base.xml",
+        "lib/net5.0-windows7.0/Syncfusion.DocIO.Base.dll",
+        "lib/net5.0-windows7.0/Syncfusion.DocIO.Base.xml",
+        "lib/netcoreapp3.1/Syncfusion.DocIO.Base.dll",
+        "lib/netcoreapp3.1/Syncfusion.DocIO.Base.xml",
+        "syncfusion.docio.wpf.19.4.0.38.nupkg.sha512",
+        "syncfusion.docio.wpf.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.Licensing/19.4.0.38": {
+      "sha512": "aO2/KBA53/uYDAs0cj0HYW+Hf3cYnyZUpo96IaijDoVvS+Vi9N7tEUVvnAbW84aQiJFZD5LOUxoEz18Dw74iAw==",
+      "type": "package",
+      "path": "syncfusion.licensing/19.4.0.38",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/MonoAndroid10.0/Syncfusion.Licensing.dll",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net20/Syncfusion.Licensing.dll",
+        "lib/net35/Syncfusion.Licensing.dll",
+        "lib/net40/Syncfusion.Licensing.dll",
+        "lib/net45/Syncfusion.Licensing.dll",
+        "lib/net451/Syncfusion.Licensing.dll",
+        "lib/net46/Syncfusion.Licensing.dll",
+        "lib/net5.0-windows10.0/Syncfusion.Licensing.dll",
+        "lib/net5.0/Syncfusion.Licensing.dll",
+        "lib/netcoreapp3.1/Syncfusion.Licensing.dll",
+        "lib/netstandard1.0/Syncfusion.Licensing.dll",
+        "lib/netstandard1.2/Syncfusion.Licensing.dll",
+        "lib/netstandard1.4/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.19.4.0.38.nupkg.sha512",
+        "syncfusion.licensing.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.OfficeChart.Base/19.4.0.38": {
+      "sha512": "cle6Ad2jTh/7zV2gAhJ/5zBNmNykYNjn6wbDwNhoCIt4ITZLCsBTf1kTiNc34nQwr6JrQ1vD/gRtQtBYMEEB/w==",
+      "type": "package",
+      "path": "syncfusion.officechart.base/19.4.0.38",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/net20/Syncfusion.OfficeChart.Base.dll",
+        "lib/net20/Syncfusion.OfficeChart.Base.xml",
+        "lib/net35/Syncfusion.OfficeChart.Base.dll",
+        "lib/net35/Syncfusion.OfficeChart.Base.xml",
+        "lib/net40/Syncfusion.OfficeChart.Base.dll",
+        "lib/net40/Syncfusion.OfficeChart.Base.xml",
+        "lib/net45/Syncfusion.OfficeChart.Base.dll",
+        "lib/net45/Syncfusion.OfficeChart.Base.xml",
+        "lib/net451/Syncfusion.OfficeChart.Base.dll",
+        "lib/net451/Syncfusion.OfficeChart.Base.xml",
+        "lib/net46/Syncfusion.OfficeChart.Base.dll",
+        "lib/net46/Syncfusion.OfficeChart.Base.xml",
+        "lib/net5.0/Syncfusion.OfficeChart.Base.dll",
+        "lib/net5.0/Syncfusion.OfficeChart.Base.xml",
+        "lib/netcoreapp3.1/Syncfusion.OfficeChart.Base.dll",
+        "lib/netcoreapp3.1/Syncfusion.OfficeChart.Base.xml",
+        "syncfusion.officechart.base.19.4.0.38.nupkg.sha512",
+        "syncfusion.officechart.base.nuspec",
+        "syncfusion_logo.png"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "Syncfusion.DocIO.Wpf >= 19.4.0.38"
+    ]
   },
   "packageFolders": {
-    "C:\\Users\\bayze\\.nuget\\packages\\": {},
+    "C:\\Users\\101499\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
+      "projectUniqueName": "D:\\Project\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
       "projectName": "csv_to_word_v1",
-      "projectPath": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
-      "packagesPath": "C:\\Users\\bayze\\.nuget\\packages\\",
-      "outputPath": "D:\\Git\\parsing_csv_to_msword\\parsing_csv_to_msword (1)\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\obj\\",
+      "projectPath": "D:\\Project\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
+      "packagesPath": "C:\\Users\\101499\\.nuget\\packages\\",
+      "outputPath": "D:\\Project\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\bayze\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\101499\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -50,6 +216,12 @@
     "frameworks": {
       "netcoreapp3.1": {
         "targetAlias": "netcoreapp3.1",
+        "dependencies": {
+          "Syncfusion.DocIO.Wpf": {
+            "target": "Package",
+            "version": "[19.4.0.38, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -68,7 +240,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.209\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -34,10 +34,21 @@ namespace csv_to_word_v1
             {
                 data.fileCsv = csvFile.FileName;
             }
-            var word = new Word(data.fileTemplate);
-            
-            Csv csv = new Csv(data);
+            var word = new Word(data.fileTemplate);            
+            Сsv csv = new Сsv(data);
             data = csv.Import();
+
+            var filesItems = new Dictionary<string, string>
+            {
+                {"<fileScanGeometry>", data.fileScanGeometry},
+                {"<fileScandeffect>", data.fileScandeffect},
+                {"<fileSpectr>", data.fileSpectr},
+            };
+
+            var charts = new Dictionary<string, Array>
+            {
+                {"<chart_1>", data.sectionArray.Select(x => x.averagInSection).ToArray()}                
+            };
 
             var items = new Dictionary<string, string>
             {
@@ -46,15 +57,12 @@ namespace csv_to_word_v1
                 {"<averageNonRoundless>", data.averageNonRoundless.ToString()},
                 {"<averageDeviationDiametr>", data.averageDeviationDiametr.ToString()},
                 {"<dMax>", data.dMax.ToString()},
-                {"<dMin>", data.dMin.ToString()},
-                {"<fileScanGeometry>", data.fileScanGeometry},
-                {"<fileScandeffect>", data.fileScandeffect},
-                {"<fileSpectr>", data.fileSpectr},
+                {"<dMin>", data.dMin.ToString()},                
                 {"<dateTime>", data.dateTime},
                 {"<owner>", data.owner}
             };
 
-            word.Process(items);
+            word.Process(items, filesItems, charts);
         }
 
         private void fileScanGeometry_button_Click(object sender, EventArgs e)
@@ -62,7 +70,7 @@ namespace csv_to_word_v1
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                data.fileScanGeometry = ofd.FileName;                                
+                data.fileScanGeometry = ofd.FileName;
             }
         }
 
