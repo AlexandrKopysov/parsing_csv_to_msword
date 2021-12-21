@@ -41,7 +41,7 @@ namespace csv_to_word_v1
             var filesItems = new Dictionary<string, string>
             {
                 {"<fileScanGeometry>", data.fileScanGeometry},
-                {"<fileScandeffect>", data.fileScandeffect},
+                {"<fileScandeffect>", data.fileScanDeffect},
                 {"<fileSpectr>", data.fileSpectr},
             };
 
@@ -79,7 +79,7 @@ namespace csv_to_word_v1
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                data.fileScandeffect = ofd.FileName;                
+                data.fileScanDeffect = ofd.FileName;                
             }
         }
 

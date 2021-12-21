@@ -23,12 +23,17 @@ namespace csv_to_word_v1.Services
         }
         public DataModel Import()
         {
-            getParametersStatic();
-            getParametersRows();            
+            getParametersStatic();            
+
+            getParametersRows();
+            getParametersDeffectRows();
+
             groupByX_MM();
-            CreateGridImage(10,10,0,0,50);            
+            groupDeffectsOnFi();
+            
+            CreateGridImage(360,30,0,0,10);            
             return data;
-        }
+        }        
 
         public void CreateGridImage(
             int maxXCells,
@@ -37,6 +42,10 @@ namespace csv_to_word_v1.Services
             int cellYPosition,
             int boxSize)
         {
+
+            //без группировки по Fi
+            double averageDeviation = Math.Round(data.dataDeffectArray.Select(x => x.Brightness).Average(), 3);
+
             using (var bmp = new System.Drawing.Bitmap(maxXCells * boxSize + 1, maxYCells * boxSize + 1))
             {
                 using (Graphics g = Graphics.FromImage(bmp))
@@ -69,14 +78,28 @@ namespace csv_to_word_v1.Services
                 {
                     bmp.Save(memStream, ImageFormat.Jpeg);
                     var img = Image.FromStream(memStream);
-                    img.Save("D:\\");
+                    img.Save("D:\\file.jpg");
                 }                
+            }
+        }
+        //Группируем параметры деффектов в модель
+        private void groupDeffectsOnFi()
+        {
+            var groupFi = data.dataDeffectArray.GroupBy(x => x.Fi).ToArray();
+            List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();
+            foreach (var group in groupFi)
+            {
+                SectionDeffectModel sectionDeffectModel = new SectionDeffectModel();
+                sectionDeffectModel.key = Convert.ToInt32(group.Key);
+                sectionDeffectModel.averageDeviationOnDegree = Math.Round(group.Select(x => x.Brightness).Average(), 2);                
+                sectionDeffectArray.Add(sectionDeffectModel);                
             }
         }
 
         private DataModel groupByX_MM()
         {
             var groupX_MM = data.dataArray.GroupBy(x => x.X_MM).ToArray();
+            //Костыль, взять значения из первого жлемента массива
             double dMax = -10000;
             double dMin = 10000;
             List<SectionModel> sectionArray = new List<SectionModel>();
@@ -120,7 +143,10 @@ namespace csv_to_word_v1.Services
             data.averageDiametr = (float)Math.Round(Convert.ToDouble(arrayDiamter.Average()),4);
             return data;
         }
-
+        /// <summary>
+        /// Строки основного csv файла группируем в модель
+        /// </summary>
+        /// <returns></returns>
         private DataModel getParametersRows()
         {
             TextFieldParser tfp = new TextFieldParser(data.fileCsv);
@@ -150,7 +176,41 @@ namespace csv_to_word_v1.Services
             data.dataArray = rows;
             return data;
         }
-
+        /// <summary>
+        /// Параметры файла деффекта группируем в модель
+        /// </summary>
+        /// <returns></returns>
+        private DataModel getParametersDeffectRows()
+        {
+            TextFieldParser tfp = new TextFieldParser(data.fileScanDeffect);
+            List<DeffectRow> rows = new List<DeffectRow>();
+            using (tfp)
+            {
+                tfp.TextFieldType = FieldType.Delimited;
+                tfp.SetDelimiters(";");
+                int rowIndexStart = 1;
+                int rowIndex = 0;
+                while (!tfp.EndOfData)
+                {
+                    string[] fields = tfp.ReadFields();
+                    if (rowIndex >= rowIndexStart)
+                    {
+                        DeffectRow row = new DeffectRow();
+                        row.X_MM = int.Parse(fields[0]);
+                        row.Fi = float.Parse(fields[1]);
+                        row.Brightness = float.Parse(fields[2]);                        
+                        rows.Add(row);
+                    }
+                    rowIndex++;
+                }
+            }
+            data.dataDeffectArray = rows;            
+            return data;
+        }
+        /// <summary>
+        /// Заголовки основного csv файла
+        /// </summary>
+        /// <returns></returns>
         private DataModel getParametersStatic()
         {
             TextFieldParser tfp = new TextFieldParser(data.fileCsv);

@@ -40,7 +40,7 @@ namespace csv_to_word_v1.Model
         /// <summary>
         /// Путь к файлу сканирования деффектов
         /// </summary>
-        public string fileScandeffect { get; set; }
+        public string fileScanDeffect { get; set; }
         /// <summary>
         /// Путь к файлу измерений спектров пропускания/отражения
         /// </summary>
@@ -71,9 +71,13 @@ namespace csv_to_word_v1.Model
         /// </summary>
         public string fileCsv { get; set; }
         /// <summary>
-        /// Массив строк
+        /// Массив строк основного файла
         /// </summary>
         public List<Row> dataArray { get; set; }
+        /// <summary>
+        /// Массив строк основного файла
+        /// </summary>
+        public List<DeffectRow> dataDeffectArray { get; set; }
         /// <summary>
         /// Массив строк
         /// </summary>
