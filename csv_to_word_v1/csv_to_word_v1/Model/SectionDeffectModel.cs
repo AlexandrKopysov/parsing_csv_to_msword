@@ -10,16 +10,24 @@ namespace csv_to_word_v1.Model
     public class SectionDeffectModel
     {
         /// <summary>
-        /// Ключ - Fi
+        /// Ключ
         /// </summary>
         public int key { get; set; }
         /// <summary>
-        /// Среднее значение по градусу
+        /// Среднее значение
         /// </summary>
-        public double averageValueOnDegree { get; set; }
+        public double averageValue { get; set; }
         /// <summary>
-        /// среднеквадратичное отклонение по градусу
+        /// среднеквадратичное отклонение
         /// </summary>
-        public double averageDeviationOnDegree { get; set; }
+        public double averageDeviationOnSection { get; set; }
+        /// <summary>
+        /// Максимальное значение в выборке (Fi или X_MM)
+        /// </summary>
+        public int maxValueInTheSampleOnSetcion { get; set; }
+        /// <summary>
+        /// Минимальное значение в выборке (Fi или X_MM)
+        /// </summary>
+        public int minValueInTheSample { get; set; }
     }
 }

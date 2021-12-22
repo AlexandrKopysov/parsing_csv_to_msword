@@ -15,7 +15,13 @@ namespace csv_to_word_v1.Services
     
     public class Сsv
     {
+        private List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();
         
+        /// <summary>
+        /// Граница выборки
+        /// </summary>
+        private int maxValueInTheSample;
+
         private DataModel data;
         public Сsv(DataModel data)
         {
@@ -29,9 +35,11 @@ namespace csv_to_word_v1.Services
             getParametersDeffectRows();
 
             groupByX_MM();
-            groupDeffectsOnFi();
-            
-            CreateGridImage(360,30,0,0,10);            
+            //sectionDeffectArray = groupDeffectsOnFi();
+            sectionDeffectArray = groupDeffectsOnX_MM();
+
+
+            CreateGridImage(360, 30,0,0,10);            
             return data;
         }        
 
@@ -82,18 +90,55 @@ namespace csv_to_word_v1.Services
                 }                
             }
         }
-        //Группируем параметры деффектов в модель
-        private void groupDeffectsOnFi()
+        /// <summary>
+        /// Группировка параметров деффекта по Fi
+        /// </summary>
+        private List<SectionDeffectModel> groupDeffectsOnFi()
         {
             var groupFi = data.dataDeffectArray.GroupBy(x => x.Fi).ToArray();
+            maxValueInTheSample = groupFi.First().Count();
+            double mainAverageValue = Math.Round(data.dataDeffectArray.Select(x => x.Brightness).ToArray().Average(), 3);
             List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();
             foreach (var group in groupFi)
             {
                 SectionDeffectModel sectionDeffectModel = new SectionDeffectModel();
                 sectionDeffectModel.key = Convert.ToInt32(group.Key);
-                sectionDeffectModel.averageDeviationOnDegree = Math.Round(group.Select(x => x.Brightness).Average(), 2);                
-                sectionDeffectArray.Add(sectionDeffectModel);                
+                sectionDeffectModel.averageValue = Math.Round(group.Select(x => x.Brightness).Average(), 3);
+                sectionDeffectModel.averageDeviationOnSection = Math.Round(Math.Pow((sectionDeffectModel.averageValue - mainAverageValue), 2), 3);
+                maxValueInTheSample = group.Count() > maxValueInTheSample ? group.Count() : maxValueInTheSample;
+                sectionDeffectArray.Add(sectionDeffectModel);
             }
+            //Показывает 0!!!
+            data.averageDeviationOnDeffect = Math.Round(
+                Math.Sqrt(sectionDeffectArray.Select(
+                    x => x.averageDeviationOnSection).Sum() / (sectionDeffectArray.Count() - 1)), 3);
+
+            return sectionDeffectArray;
+        }        
+        /// <summary>
+        /// Группировка параметров деффекта по X_MM
+        /// </summary>
+        private List<SectionDeffectModel> groupDeffectsOnX_MM()
+        {
+            var groupX_MM = data.dataDeffectArray.GroupBy(x => x.X_MM).ToArray();
+            maxValueInTheSample = groupX_MM.First().Count();
+            double mainAverageValue = Math.Round(data.dataDeffectArray.Select(x => x.Brightness).ToArray().Average(), 3);          
+            List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();            
+            foreach (var group in groupX_MM)
+            {
+                SectionDeffectModel sectionDeffectModel = new SectionDeffectModel();
+                sectionDeffectModel.key = Convert.ToInt32(group.Key);
+                sectionDeffectModel.averageValue = Math.Round(group.Select(x => x.Brightness).Average(), 3);
+                sectionDeffectModel.averageDeviationOnSection = Math.Round(Math.Pow((sectionDeffectModel.averageValue - mainAverageValue),2), 3);
+                maxValueInTheSample = group.Count() > maxValueInTheSample ? group.Count() : maxValueInTheSample;
+                sectionDeffectArray.Add(sectionDeffectModel);
+            }
+
+            data.averageDeviationOnDeffect = Math.Round(
+                Math.Sqrt(sectionDeffectArray.Select(
+                    x => x.averageDeviationOnSection).Sum() / (sectionDeffectArray.Count() - 1)),3);
+
+            return sectionDeffectArray;
         }
 
         private DataModel groupByX_MM()

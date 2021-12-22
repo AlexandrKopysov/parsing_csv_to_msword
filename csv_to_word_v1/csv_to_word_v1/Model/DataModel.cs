@@ -25,6 +25,10 @@ namespace csv_to_word_v1.Model
         /// Относительное среднее значение некруглости по длине
         /// </summary>
         public double averageNonRoundless { get; set; }
+        ///
+        ///Среднеквадратичное отклонение по длине для деффекта
+        ///
+        public double averageDeviationOnDeffect;
         /// <summary>
         /// Максимальное значение диаметра
         /// </summary>
@@ -75,7 +79,7 @@ namespace csv_to_word_v1.Model
         /// </summary>
         public List<Row> dataArray { get; set; }
         /// <summary>
-        /// Массив строк основного файла
+        /// Массив строк файла дефекта
         /// </summary>
         public List<DeffectRow> dataDeffectArray { get; set; }
         /// <summary>
