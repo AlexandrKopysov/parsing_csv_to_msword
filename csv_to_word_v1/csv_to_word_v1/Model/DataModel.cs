@@ -83,6 +83,14 @@ namespace csv_to_word_v1.Model
         /// </summary>
         public List<DeffectRow> dataDeffectArray { get; set; }
         /// <summary>
+        /// +3сигма для файла деффекта
+        /// </summary>
+        public double deffectPlus3sigma { get; set; }
+        /// <summary>
+        /// -3сигма для файла деффекта
+        /// </summary>
+        public double deffectMinus3sigma { get; set; }
+        /// <summary>
         /// Массив строк
         /// </summary>
         public List<SectionModel> sectionArray { get; set; }

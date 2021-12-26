@@ -29,5 +29,6 @@ namespace csv_to_word_v1.Model
         /// Минимальное значение в выборке (Fi или X_MM)
         /// </summary>
         public int minValueInTheSample { get; set; }
+        
     }
 }

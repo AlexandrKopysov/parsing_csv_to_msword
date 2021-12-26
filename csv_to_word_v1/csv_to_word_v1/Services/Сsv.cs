@@ -38,8 +38,8 @@ namespace csv_to_word_v1.Services
             //sectionDeffectArray = groupDeffectsOnFi();
             sectionDeffectArray = groupDeffectsOnX_MM();
 
-
-            CreateGridImage(360, 30,0,0,10);            
+            
+            CreateGridImage(360, sectionDeffectArray.Count(), 0,0,10);            
             return data;
         }        
 
@@ -50,9 +50,6 @@ namespace csv_to_word_v1.Services
             int cellYPosition,
             int boxSize)
         {
-
-            //без группировки по Fi
-            double averageDeviation = Math.Round(data.dataDeffectArray.Select(x => x.Brightness).Average(), 3);
 
             using (var bmp = new System.Drawing.Bitmap(maxXCells * boxSize + 1, maxYCells * boxSize + 1))
             {
@@ -137,6 +134,9 @@ namespace csv_to_word_v1.Services
             data.averageDeviationOnDeffect = Math.Round(
                 Math.Sqrt(sectionDeffectArray.Select(
                     x => x.averageDeviationOnSection).Sum() / (sectionDeffectArray.Count() - 1)),3);
+
+            data.deffectMinus3sigma = Math.Round(mainAverageValue - data.averageDeviationOnDeffect * 3 , 3);
+            data.deffectPlus3sigma = Math.Round(mainAverageValue + data.averageDeviationOnDeffect * 3, 3);            
 
             return sectionDeffectArray;
         }
