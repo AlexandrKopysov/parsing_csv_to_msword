@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "1xXjeKeCzNMrhdwyspJEKyfbaHvv1rqx7ObHTlXSq/IZ41lm4SIGVg+7ieIIgue1o2mZE0Q/NQaY5DK2NOMsgw==",
+  "dgSpecHash": "6uEpoMRaETqzma0l4er8b/4e5baF6BqeiyH3HQ7ZHEtriUCW4XXW+IaHpDpPPfwYpQuHQDINO24SsusPVZasPg==",
   "success": true,
-  "projectFilePath": "D:\\Git\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
+  "projectFilePath": "D:\\Project\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\bayze\\.nuget\\packages\\syncfusion.compression.base\\19.4.0.38\\syncfusion.compression.base.19.4.0.38.nupkg.sha512",
-    "C:\\Users\\bayze\\.nuget\\packages\\syncfusion.docio.wpf\\19.4.0.38\\syncfusion.docio.wpf.19.4.0.38.nupkg.sha512",
-    "C:\\Users\\bayze\\.nuget\\packages\\syncfusion.licensing\\19.4.0.38\\syncfusion.licensing.19.4.0.38.nupkg.sha512",
-    "C:\\Users\\bayze\\.nuget\\packages\\syncfusion.officechart.base\\19.4.0.38\\syncfusion.officechart.base.19.4.0.38.nupkg.sha512"
+    "C:\\Users\\101499\\.nuget\\packages\\syncfusion.compression.base\\19.4.0.38\\syncfusion.compression.base.19.4.0.38.nupkg.sha512",
+    "C:\\Users\\101499\\.nuget\\packages\\syncfusion.docio.wpf\\19.4.0.38\\syncfusion.docio.wpf.19.4.0.38.nupkg.sha512",
+    "C:\\Users\\101499\\.nuget\\packages\\syncfusion.licensing\\19.4.0.38\\syncfusion.licensing.19.4.0.38.nupkg.sha512",
+    "C:\\Users\\101499\\.nuget\\packages\\syncfusion.officechart.base\\19.4.0.38\\syncfusion.officechart.base.19.4.0.38.nupkg.sha512"
   ],
   "logs": []
 }

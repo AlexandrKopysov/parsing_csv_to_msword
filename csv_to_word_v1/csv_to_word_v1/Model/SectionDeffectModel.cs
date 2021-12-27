@@ -18,6 +18,14 @@ namespace csv_to_word_v1.Model
         /// </summary>
         public double averageValue { get; set; }
         /// <summary>
+        /// Массив деффектов +3сигма
+        /// </summary>
+        public List<DefectRow> defectPlus3sigmaArray { get; set; }
+        /// <summary>
+        /// Массив деффектов -3сигма
+        /// </summary>
+        public List<DefectRow> defectMinus3sigmaArray { get; set; }
+        /// <summary>
         /// среднеквадратичное отклонение
         /// </summary>
         public double averageDeviationOnSection { get; set; }

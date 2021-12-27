@@ -7,7 +7,7 @@ namespace csv_to_word_v1.Model
     /// <summary>
     /// Модель строки файла деффектов
     /// </summary>
-    public class DeffectRow
+    public class DefectRow
     {        
         /// <summary>
         /// Отрезок, на котором проводят измерения

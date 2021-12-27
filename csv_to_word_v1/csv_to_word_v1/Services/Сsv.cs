@@ -55,17 +55,37 @@ namespace csv_to_word_v1.Services
             {
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
-                    g.Clear(Color.Yellow);
+                    g.Clear(Color.Green);
+                    //Для линий
                     Pen pen = new Pen(Color.Black);
                     pen.Width = 1;
 
-                    //Draw red rectangle to go behind cross
-                    Rectangle rect = new Rectangle(boxSize * (cellXPosition - 1), boxSize * (cellYPosition - 1), boxSize, boxSize);
-                    g.FillRectangle(new SolidBrush(Color.Red), rect);
+                    //Для прямоугольников
+                    Brush red = new SolidBrush(Color.Red);
+                    Pen redPen = new Pen(red, 10);
+                    //Для прямоугольников
+                    Brush blue = new SolidBrush(Color.Blue);
+                    Pen bluePen = new Pen(red, 10);
 
-                    //Draw cross
-                    g.DrawLine(pen, boxSize * (cellXPosition - 1), boxSize * (cellYPosition - 1), boxSize * cellXPosition, boxSize * cellYPosition);
-                    g.DrawLine(pen, boxSize * (cellXPosition - 1), boxSize * cellYPosition, boxSize * cellXPosition, boxSize * (cellYPosition - 1));
+                    for (var index = 0; index < maxYCells; index++)
+                    {
+                        if (sectionDeffectArray[index].defectMinus3sigmaArray.Count() != 0)
+                        {
+                            foreach(var row in sectionDeffectArray[index].defectMinus3sigmaArray)
+                            {
+                                Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
+                                g.FillRectangle(blue, rect);
+                            }
+                        }
+                        if (sectionDeffectArray[index].defectPlus3sigmaArray.Count() != 0)
+                        {
+                            foreach (var row in sectionDeffectArray[index].defectPlus3sigmaArray)
+                            {
+                                Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
+                                g.FillRectangle(red, rect);
+                            }
+                        }
+                    }
 
                     //Draw horizontal lines
                     for (int i = 0; i <= maxXCells; i++)
@@ -83,7 +103,7 @@ namespace csv_to_word_v1.Services
                 {
                     bmp.Save(memStream, ImageFormat.Jpeg);
                     var img = Image.FromStream(memStream);
-                    img.Save("D:\\file.jpg");
+                    img.Save("D:\\file.png");
                 }                
             }
         }
@@ -92,9 +112,9 @@ namespace csv_to_word_v1.Services
         /// </summary>
         private List<SectionDeffectModel> groupDeffectsOnFi()
         {
-            var groupFi = data.dataDeffectArray.GroupBy(x => x.Fi).ToArray();
+            var groupFi = data.dataDefectArray.GroupBy(x => x.Fi).ToArray();
             maxValueInTheSample = groupFi.First().Count();
-            double mainAverageValue = Math.Round(data.dataDeffectArray.Select(x => x.Brightness).ToArray().Average(), 3);
+            double mainAverageValue = Math.Round(data.dataDefectArray.Select(x => x.Brightness).ToArray().Average(), 3);
             List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();
             foreach (var group in groupFi)
             {
@@ -106,7 +126,7 @@ namespace csv_to_word_v1.Services
                 sectionDeffectArray.Add(sectionDeffectModel);
             }
             //Показывает 0!!!
-            data.averageDeviationOnDeffect = Math.Round(
+            data.averageDeviationOnDefect = Math.Round(
                 Math.Sqrt(sectionDeffectArray.Select(
                     x => x.averageDeviationOnSection).Sum() / (sectionDeffectArray.Count() - 1)), 3);
 
@@ -117,9 +137,9 @@ namespace csv_to_word_v1.Services
         /// </summary>
         private List<SectionDeffectModel> groupDeffectsOnX_MM()
         {
-            var groupX_MM = data.dataDeffectArray.GroupBy(x => x.X_MM).ToArray();
+            var groupX_MM = data.dataDefectArray.GroupBy(x => x.X_MM).ToArray();
             maxValueInTheSample = groupX_MM.First().Count();
-            double mainAverageValue = Math.Round(data.dataDeffectArray.Select(x => x.Brightness).ToArray().Average(), 3);          
+            double mainAverageValue = Math.Round(data.dataDefectArray.Select(x => x.Brightness).ToArray().Average(), 3);          
             List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();            
             foreach (var group in groupX_MM)
             {
@@ -131,12 +151,20 @@ namespace csv_to_word_v1.Services
                 sectionDeffectArray.Add(sectionDeffectModel);
             }
 
-            data.averageDeviationOnDeffect = Math.Round(
+            data.averageDeviationOnDefect = Math.Round(
                 Math.Sqrt(sectionDeffectArray.Select(
                     x => x.averageDeviationOnSection).Sum() / (sectionDeffectArray.Count() - 1)),3);
+            
+            //+-3Сигма
+            data.defectMinus3sigma = Math.Round(mainAverageValue - data.averageDeviationOnDefect * 3 , 3);
+            data.defectPlus3sigma = Math.Round(mainAverageValue + data.averageDeviationOnDefect * 3, 3);
 
-            data.deffectMinus3sigma = Math.Round(mainAverageValue - data.averageDeviationOnDeffect * 3 , 3);
-            data.deffectPlus3sigma = Math.Round(mainAverageValue + data.averageDeviationOnDeffect * 3, 3);            
+            //Массивы отклонений +-3сигма
+            for (var index = 0; index < groupX_MM.Count(); index++)
+            {
+                sectionDeffectArray[index].defectMinus3sigmaArray = groupX_MM[index].Where(row => row.Brightness <= data.defectMinus3sigma).ToList();
+                sectionDeffectArray[index].defectPlus3sigmaArray = groupX_MM[index].Where(row => row.Brightness >= data.defectPlus3sigma).ToList();
+            }        
 
             return sectionDeffectArray;
         }
@@ -227,8 +255,8 @@ namespace csv_to_word_v1.Services
         /// <returns></returns>
         private DataModel getParametersDeffectRows()
         {
-            TextFieldParser tfp = new TextFieldParser(data.fileScanDeffect);
-            List<DeffectRow> rows = new List<DeffectRow>();
+            TextFieldParser tfp = new TextFieldParser(data.fileScanDefect);
+            List<DefectRow> rows = new List<DefectRow>();
             using (tfp)
             {
                 tfp.TextFieldType = FieldType.Delimited;
@@ -240,7 +268,7 @@ namespace csv_to_word_v1.Services
                     string[] fields = tfp.ReadFields();
                     if (rowIndex >= rowIndexStart)
                     {
-                        DeffectRow row = new DeffectRow();
+                        DefectRow row = new DefectRow();
                         row.X_MM = int.Parse(fields[0]);
                         row.Fi = float.Parse(fields[1]);
                         row.Brightness = float.Parse(fields[2]);                        
@@ -249,7 +277,7 @@ namespace csv_to_word_v1.Services
                     rowIndex++;
                 }
             }
-            data.dataDeffectArray = rows;            
+            data.dataDefectArray = rows;            
             return data;
         }
         /// <summary>

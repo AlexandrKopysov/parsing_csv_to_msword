@@ -28,7 +28,7 @@ namespace csv_to_word_v1.Model
         ///
         ///Среднеквадратичное отклонение по длине для деффекта
         ///
-        public double averageDeviationOnDeffect;
+        public double averageDeviationOnDefect;
         /// <summary>
         /// Максимальное значение диаметра
         /// </summary>
@@ -44,7 +44,7 @@ namespace csv_to_word_v1.Model
         /// <summary>
         /// Путь к файлу сканирования деффектов
         /// </summary>
-        public string fileScanDeffect { get; set; }
+        public string fileScanDefect { get; set; }
         /// <summary>
         /// Путь к файлу измерений спектров пропускания/отражения
         /// </summary>
@@ -81,15 +81,15 @@ namespace csv_to_word_v1.Model
         /// <summary>
         /// Массив строк файла дефекта
         /// </summary>
-        public List<DeffectRow> dataDeffectArray { get; set; }
+        public List<DefectRow> dataDefectArray { get; set; }
         /// <summary>
         /// +3сигма для файла деффекта
         /// </summary>
-        public double deffectPlus3sigma { get; set; }
+        public double defectPlus3sigma { get; set; }
         /// <summary>
         /// -3сигма для файла деффекта
         /// </summary>
-        public double deffectMinus3sigma { get; set; }
+        public double defectMinus3sigma { get; set; }       
         /// <summary>
         /// Массив строк
         /// </summary>
