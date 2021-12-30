@@ -55,37 +55,63 @@ namespace csv_to_word_v1.Services
             {
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
-                    g.Clear(Color.Green);
+                    g.Clear(Color.White);
                     //Для линий
                     Pen pen = new Pen(Color.Black);
                     pen.Width = 1;
 
-                    //Для прямоугольников
-                    Brush red = new SolidBrush(Color.Red);
-                    Pen redPen = new Pen(red, 10);
-                    //Для прямоугольников
-                    Brush blue = new SolidBrush(Color.Blue);
-                    Pen bluePen = new Pen(red, 10);
-
+                    //Группируем карту деффектов по X_MM
+                    var groupX_MM = data.dataDefectArray.GroupBy(x => x.X_MM).ToArray();
                     for (var index = 0; index < maxYCells; index++)
                     {
-                        if (sectionDeffectArray[index].defectMinus3sigmaArray.Count() != 0)
+                        foreach(var cell in groupX_MM[index])
                         {
-                            foreach(var row in sectionDeffectArray[index].defectMinus3sigmaArray)
+
+                            int red = 0;
+                            int green = 0;
+
+                            if (cell.Brightness <= 0.5)
                             {
-                                Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
-                                g.FillRectangle(blue, rect);
-                            }
-                        }
-                        if (sectionDeffectArray[index].defectPlus3sigmaArray.Count() != 0)
-                        {
-                            foreach (var row in sectionDeffectArray[index].defectPlus3sigmaArray)
+                                red = Convert.ToInt32(255*(cell.Brightness*2));
+                                green = 255;
+                            } else
                             {
-                                Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
-                                g.FillRectangle(red, rect);
+                                red = 255;
+                                green = Convert.ToInt32(255 * ((1 - cell.Brightness)*2));
                             }
+
+                            Brush color = new SolidBrush(Color.FromArgb(255, red, green, 0));
+                            Rectangle rect = new Rectangle((boxSize * (int)cell.Fi), (boxSize * index), boxSize, boxSize);
+                            g.FillRectangle(color, rect);
                         }
                     }
+
+                    //Для прямоугольников
+                    //Brush red = new SolidBrush(Color.Red);
+                    //Pen redPen = new Pen(red, 10);
+                    ////Для прямоугольников
+                    //Brush blue = new SolidBrush(Color.Blue);
+                    //Pen bluePen = new Pen(red, 10);
+
+                    //for (var index = 0; index < maxYCells; index++)
+                    //{
+                    //    if (sectionDeffectArray[index].defectMinus3sigmaArray.Count() != 0)
+                    //    {
+                    //        foreach(var row in sectionDeffectArray[index].defectMinus3sigmaArray)
+                    //        {
+                    //            Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
+                    //            g.FillRectangle(blue, rect);
+                    //        }
+                    //    }                        
+                    //    if (sectionDeffectArray[index].defectPlus3sigmaArray.Count() != 0)
+                    //    {
+                    //        foreach (var row in sectionDeffectArray[index].defectPlus3sigmaArray)
+                    //        {
+                    //            Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
+                    //            g.FillRectangle(red, rect);
+                    //        }
+                    //    }
+                    //}
 
                     //Draw horizontal lines
                     for (int i = 0; i <= maxXCells; i++)
