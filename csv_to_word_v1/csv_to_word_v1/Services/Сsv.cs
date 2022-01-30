@@ -38,21 +38,51 @@ namespace csv_to_word_v1.Services
             //sectionDeffectArray = groupDeffectsOnFi();
             sectionDeffectArray = groupDeffectsOnX_MM();
 
-            
-            CreateGridImage(360, sectionDeffectArray.Count(), 0,0,10);            
+            GroupImg(sectionDeffectArray.Count());
+
+            //CreateGridImage(360, sectionDeffectArray.Count(),0,0,0,0,2);            
             return data;
-        }        
+        }
+
+
+        public void GroupImg(int maxYCells)
+        {
+            int pointStart = 0;
+            int pointFinish = 0;
+            int maxYCount = 15;
+            int fileIndex = 0;
+            for (int indexForward = 0; indexForward < maxYCells; indexForward++)
+            {
+                int balance = indexForward % maxYCount;
+                if (indexForward!=0 && balance == 0)
+                {
+                    fileIndex++;
+                    pointFinish = indexForward-1;
+                    CreateGridImage(fileIndex, 360, sectionDeffectArray.Count(), pointStart, pointFinish, maxYCount, 10);
+                    pointStart = indexForward;
+                    //CreateGridImage(360, sectionDeffectArray.Count(), 0, 0, maxYCount, 0, 2);
+
+                }
+            }
+            fileIndex++;
+            CreateGridImage(fileIndex, 360, sectionDeffectArray.Count(), pointStart, maxYCells-1, maxYCount, 10);
+        }
+
 
         public void CreateGridImage(
+            int fileIndex,
             int maxXCells,
             int maxYCells,
-            int cellXPosition,
-            int cellYPosition,
+            int pointStart,
+            int pointFinish,
+            int maxYCount,
             int boxSize)
         {
-
-            using (var bmp = new System.Drawing.Bitmap(maxXCells * boxSize + 1, maxYCells * boxSize + 1))
+ 
+            using (var bmp = new System.Drawing.Bitmap(maxXCells * boxSize + 1, maxYCount * boxSize + 1))
             {
+                
+                
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
                     g.Clear(Color.White);
@@ -61,9 +91,11 @@ namespace csv_to_word_v1.Services
                     pen.Width = 1;
 
                     //Группируем карту деффектов по X_MM
+                    var indexInBox = 0;
                     var groupX_MM = data.dataDefectArray.GroupBy(x => x.X_MM).ToArray();
-                    for (var index = 0; index < maxYCells; index++)
+                    for (var index = pointStart; index <= pointFinish; index++)
                     {
+                       
                         foreach(var cell in groupX_MM[index])
                         {
 
@@ -81,37 +113,11 @@ namespace csv_to_word_v1.Services
                             }
 
                             Brush color = new SolidBrush(Color.FromArgb(255, red, green, 0));
-                            Rectangle rect = new Rectangle((boxSize * (int)cell.Fi), (boxSize * index), boxSize, boxSize);
+                            Rectangle rect = new Rectangle((boxSize * (int)cell.Fi), (boxSize * indexInBox), boxSize, boxSize);
                             g.FillRectangle(color, rect);
                         }
-                    }
-
-                    //Для прямоугольников
-                    //Brush red = new SolidBrush(Color.Red);
-                    //Pen redPen = new Pen(red, 10);
-                    ////Для прямоугольников
-                    //Brush blue = new SolidBrush(Color.Blue);
-                    //Pen bluePen = new Pen(red, 10);
-
-                    //for (var index = 0; index < maxYCells; index++)
-                    //{
-                    //    if (sectionDeffectArray[index].defectMinus3sigmaArray.Count() != 0)
-                    //    {
-                    //        foreach(var row in sectionDeffectArray[index].defectMinus3sigmaArray)
-                    //        {
-                    //            Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
-                    //            g.FillRectangle(blue, rect);
-                    //        }
-                    //    }                        
-                    //    if (sectionDeffectArray[index].defectPlus3sigmaArray.Count() != 0)
-                    //    {
-                    //        foreach (var row in sectionDeffectArray[index].defectPlus3sigmaArray)
-                    //        {
-                    //            Rectangle rect = new Rectangle((boxSize * (int)row.Fi), (boxSize * index), boxSize, boxSize);
-                    //            g.FillRectangle(red, rect);
-                    //        }
-                    //    }
-                    //}
+                        indexInBox++;
+                    }                    
 
                     //Draw horizontal lines
                     for (int i = 0; i <= maxXCells; i++)
@@ -129,7 +135,7 @@ namespace csv_to_word_v1.Services
                 {
                     bmp.Save(memStream, ImageFormat.Jpeg);
                     var img = Image.FromStream(memStream);
-                    img.Save("D:\\file.png");
+                    img.Save("D:\\file_"+ fileIndex .ToString() + ".png");
                 }                
             }
         }
