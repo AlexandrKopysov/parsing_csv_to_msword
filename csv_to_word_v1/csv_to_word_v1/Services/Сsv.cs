@@ -15,8 +15,9 @@ namespace csv_to_word_v1.Services
     
     public class Сsv
     {
-        private List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();
-        
+        private List<SectionDeffectModel> sectionDefectArray = new List<SectionDeffectModel>();
+        private List<DefectRow> listDefectRowArray = new List<DefectRow>();
+
         /// <summary>
         /// Граница выборки
         /// </summary>
@@ -36,14 +37,31 @@ namespace csv_to_word_v1.Services
 
             groupByX_MM();
             //sectionDeffectArray = groupDeffectsOnFi();
-            sectionDeffectArray = groupDeffectsOnX_MM();
+            sectionDefectArray = groupDeffectsOnX_MM();
 
-            GroupImg(sectionDeffectArray.Count());
+            listDefectRowArray = groupDefectsForGroup(sectionDefectArray);
+
+            GroupImg(sectionDefectArray.Count());
+
+
 
             //CreateGridImage(360, sectionDeffectArray.Count(),0,0,0,0,2);            
             return data;
         }
+        /// <summary>
+        /// Создание групп деффектов, находящихся поблизости друг от друга
+        /// </summary>
+        private List<DefectRow> groupDefectsForGroup(List<SectionDeffectModel> sectionDefectArray)
+        {
+            List<DefectRow> newArrayDefectRow = new List<DefectRow>();
+            
+            foreach (var defect in sectionDefectArray)
+            {
+                Console.WriteLine(defect);
+            }
 
+            return newArrayDefectRow;
+        }
 
         public void GroupImg(int maxYCells)
         {
@@ -58,14 +76,14 @@ namespace csv_to_word_v1.Services
                 {
                     fileIndex++;
                     pointFinish = indexForward-1;
-                    CreateGridImage(fileIndex, 360, sectionDeffectArray.Count(), pointStart, pointFinish, maxYCount, 10);
+                    CreateGridImage(fileIndex, 360, sectionDefectArray.Count(), pointStart, pointFinish, maxYCount, 10);
                     pointStart = indexForward;
                     //CreateGridImage(360, sectionDeffectArray.Count(), 0, 0, maxYCount, 0, 2);
 
                 }
             }
             fileIndex++;
-            CreateGridImage(fileIndex, 360, sectionDeffectArray.Count(), pointStart, maxYCells-1, maxYCount, 10);
+            CreateGridImage(fileIndex, 360, sectionDefectArray.Count(), pointStart, maxYCells-1, maxYCount, 10);
         }
 
 
@@ -169,6 +187,9 @@ namespace csv_to_word_v1.Services
         /// </summary>
         private List<SectionDeffectModel> groupDeffectsOnX_MM()
         {
+            //Новые границы деффекта (Если > 0.5 , до деффект)
+            var boundDefect = 0.5;
+
             var groupX_MM = data.dataDefectArray.GroupBy(x => x.X_MM).ToArray();
             maxValueInTheSample = groupX_MM.First().Count();
             double mainAverageValue = Math.Round(data.dataDefectArray.Select(x => x.Brightness).ToArray().Average(), 3);          
@@ -189,14 +210,34 @@ namespace csv_to_word_v1.Services
             
             //+-3Сигма
             data.defectMinus3sigma = Math.Round(mainAverageValue - data.averageDeviationOnDefect * 3 , 3);
-            data.defectPlus3sigma = Math.Round(mainAverageValue + data.averageDeviationOnDefect * 3, 3);
+            data.defectPlus3sigma = Math.Round(mainAverageValue + data.averageDeviationOnDefect * 3, 3);         
 
             //Массивы отклонений +-3сигма
-            for (var index = 0; index < groupX_MM.Count(); index++)
+            for (var index_1 = 0; index_1 < groupX_MM.Count(); index_1++)
             {
-                sectionDeffectArray[index].defectMinus3sigmaArray = groupX_MM[index].Where(row => row.Brightness <= data.defectMinus3sigma).ToList();
-                sectionDeffectArray[index].defectPlus3sigmaArray = groupX_MM[index].Where(row => row.Brightness >= data.defectPlus3sigma).ToList();
-            }        
+                sectionDeffectArray[index_1].defectMinus3sigmaArray = groupX_MM[index_1].Where(row => row.Brightness <= data.defectMinus3sigma).ToList();
+                sectionDeffectArray[index_1].defectPlus3sigmaArray = groupX_MM[index_1].Where(row => row.Brightness >= data.defectPlus3sigma).ToList();
+
+                //Индекс для точек в группе
+                int index_2 = 0;
+                int idnexSubPoint = 0;
+                foreach(DefectRow point in groupX_MM[index_1])
+                {
+                    if (point.Fi >= boundDefect)
+                    {
+
+                    }
+                }
+                //for (var index_2 = 0; index_2 < groupX_MM[index_1].Count(); index_2++)
+                //{
+                //    DefectRow obj = new DefectRow;
+                //    obj = groupX_MM[index_1][index_2];
+                //    //Console.WriteLine();
+                //}
+            }
+
+            
+            
 
             return sectionDeffectArray;
         }
