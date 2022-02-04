@@ -18,6 +18,10 @@ namespace csv_to_word_v1.Model
         /// </summary>
         public double averageValue { get; set; }
         /// <summary>
+        /// Массив сгруппированных деффектов , находящихся поблизости
+        /// </summary>
+        public List<GroupDefectRow> groupDefectArray { get; set; }
+        /// <summary>
         /// Массив деффектов +3сигма
         /// </summary>
         public List<DefectRow> defectPlus3sigmaArray { get; set; }

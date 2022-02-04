@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.DocIO.Wpf" Version="19.4.0.38" />
+    <PackageReference Include="Syncfusion.DocIO.Wpf" Version="19.4.0.48" />
   </ItemGroup>
 
 </Project>

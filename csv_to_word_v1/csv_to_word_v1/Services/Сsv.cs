@@ -12,7 +12,8 @@ using System.Drawing.Imaging;
 
 namespace csv_to_word_v1.Services
 {
-    
+    public interface IList<T> : ICollection<T> { };
+
     public class Сsv
     {
         private List<SectionDeffectModel> sectionDefectArray = new List<SectionDeffectModel>();
@@ -181,7 +182,92 @@ namespace csv_to_word_v1.Services
                     x => x.averageDeviationOnSection).Sum() / (sectionDeffectArray.Count() - 1)), 3);
 
             return sectionDeffectArray;
-        }        
+        }
+
+        private List<SectionDeffectModel> getGroupDefectOn(List<IGrouping<int,DefectRow>> bundDefect)
+        {
+            List<SectionDeffectModel> groupDefect = new List<SectionDeffectModel>();
+
+            foreach (var defectGroup in bundDefect)
+            {             
+                int oldIndex = 0;
+                int newIndex = 0;
+                List<GroupDefectRow> group = new List<GroupDefectRow>();
+                foreach (var defectRow in defectGroup)
+                {
+                    newIndex = (int)defectRow.Fi;
+                    if (oldIndex != newIndex - 1)
+                    {
+                        group.Add(new GroupDefectRow()
+                        {
+                            key = (int)defectRow.X_MM,
+                            DefectRowInGroup = new List<DefectRow>()
+                        });
+
+                    }
+                    oldIndex = newIndex;
+                    DefectRow defRow = new DefectRow();
+                    defRow.Brightness = defectRow.Brightness;
+                    defRow.Fi = defectRow.Fi;
+                    defRow.X_MM = defectRow.X_MM;
+
+                    group[group.Count - 1].DefectRowInGroup.Add(defRow);
+                }
+                if (group[group.Count - 1].DefectRowInGroup.Count != 1)
+                {
+                    groupDefect.Add(new SectionDeffectModel()
+                    {
+                        key = (int)defectGroup.Key,
+                        groupDefectArray = group
+                    });
+                }
+            }            
+            return groupDefect;
+        }
+        private List<SectionDeffectModel> getGroupDefectOn(List<IGrouping<float, DefectRow>> bundDefect)
+        {
+            List<SectionDeffectModel> groupDefect = new List<SectionDeffectModel>();
+
+            foreach (var defectGroup in bundDefect)
+            {
+                
+                //List<object> mass = new List<object>;                
+                int oldIndex = 0;
+                int newIndex = 0;
+                List<GroupDefectRow> group = new List<GroupDefectRow>();
+                foreach (var defectRow in defectGroup)
+                {
+                    newIndex = (int)defectRow.X_MM;
+                    if (oldIndex != newIndex - 1)
+                    {
+                        group.Add(new GroupDefectRow()
+                        {
+                            key = (int)defectRow.Fi,
+                            DefectRowInGroup = new List<DefectRow>()
+                        });
+
+                    }
+                    oldIndex = newIndex;
+                    DefectRow defRow = new DefectRow();
+                    defRow.Brightness = defectRow.Brightness;
+                    defRow.Fi = defectRow.Fi;
+                    defRow.X_MM = defectRow.X_MM;
+
+                    group[group.Count - 1].DefectRowInGroup.Add(defRow);
+                }
+                if (group.Count != 1)
+                {
+                    groupDefect.Add(new SectionDeffectModel()
+                    {
+                        key = (int)defectGroup.Key,
+                        groupDefectArray = group
+                    });
+                }
+                //groupDefect[groupDefect.Count - 1].groupDefectArray = group;
+
+            }            
+            return groupDefect;
+        }
         /// <summary>
         /// Группировка параметров деффекта по X_MM
         /// </summary>
@@ -191,6 +277,12 @@ namespace csv_to_word_v1.Services
             var boundDefect = 0.5;
 
             var groupX_MM = data.dataDefectArray.GroupBy(x => x.X_MM).ToArray();
+
+            var bundDefect_X_MM = data.dataDefectArray.Where(x => x.Brightness >= boundDefect).GroupBy(x => x.X_MM).ToList();
+            List<SectionDeffectModel> groupDefect_X_MM = getGroupDefectOn(bundDefect_X_MM);
+            var bundDefect_Fi = data.dataDefectArray.Where(x => x.Brightness >= boundDefect).GroupBy(x => x.Fi).ToList();
+            List<SectionDeffectModel> groupDefect_Fi = getGroupDefectOn(bundDefect_Fi);
+            
             maxValueInTheSample = groupX_MM.First().Count();
             double mainAverageValue = Math.Round(data.dataDefectArray.Select(x => x.Brightness).ToArray().Average(), 3);          
             List<SectionDeffectModel> sectionDeffectArray = new List<SectionDeffectModel>();            
@@ -217,23 +309,6 @@ namespace csv_to_word_v1.Services
             {
                 sectionDeffectArray[index_1].defectMinus3sigmaArray = groupX_MM[index_1].Where(row => row.Brightness <= data.defectMinus3sigma).ToList();
                 sectionDeffectArray[index_1].defectPlus3sigmaArray = groupX_MM[index_1].Where(row => row.Brightness >= data.defectPlus3sigma).ToList();
-
-                //Индекс для точек в группе
-                int index_2 = 0;
-                int idnexSubPoint = 0;
-                foreach(DefectRow point in groupX_MM[index_1])
-                {
-                    if (point.Fi >= boundDefect)
-                    {
-
-                    }
-                }
-                //for (var index_2 = 0; index_2 < groupX_MM[index_1].Count(); index_2++)
-                //{
-                //    DefectRow obj = new DefectRow;
-                //    obj = groupX_MM[index_1][index_2];
-                //    //Console.WriteLine();
-                //}
             }
 
             
