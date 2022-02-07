@@ -4,10 +4,15 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using WordOffice = Microsoft.Office.Interop.Word;
+using Excel = Microsoft.Office.Interop.Excel;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.DocIO;
 using System.Drawing;
 using Syncfusion.OfficeChart;
+using csv_to_word_v1.Model;
+using System.Drawing.Imaging;
+using OfficeOpenXml;
+using IronXL;
 
 namespace csv_to_word_v1.Services
 {
@@ -30,7 +35,10 @@ namespace csv_to_word_v1.Services
         internal bool Process(
             Dictionary<string, string> items, 
             Dictionary<string, string> filesItems, 
-            Dictionary<string, Array> charts)
+            Dictionary<string, Array> charts,
+            List<string> ictureLink,
+            List<GroupDefectRow> GroupInGropupsDefect,
+            List<DefectRow> dataDefectArray)
         {
             WordOffice.Application app = null;
             
@@ -71,8 +79,10 @@ namespace csv_to_word_v1.Services
                 app.ActiveDocument.SaveAs2(newFileName);
                 app.ActiveDocument.Close();
 
-                addHyperLinkToFile(filesItems, newFileName);
-                addChartsToFile(charts, newFileName);
+                AddDopInformation(filesItems, newFileName, ictureLink , GroupInGropupsDefect);
+                createExcell(dataDefectArray);
+                //addPicture()
+                //addChartsToFile(charts, newFileName);
 
                 //Удаляем верхний колонтитул                
                 app.Documents.Open(newFileName);
@@ -148,7 +158,11 @@ namespace csv_to_word_v1.Services
         /// Добавляем гиперссылки, используя доп пакет Nuget
         /// </summary>
         /// <param name="items"></param>
-        private void addHyperLinkToFile(Dictionary<string, string> items, string newFileName)
+        private void AddDopInformation(
+            Dictionary<string, string> items, 
+            string newFileName,
+            List<string> pictureLink,
+            List<GroupDefectRow> GroupInGropupsDefect)
         {
 
             using (WordDocument document = new WordDocument(newFileName, FormatType.Docx))
@@ -170,13 +184,63 @@ namespace csv_to_word_v1.Services
                         document.Replace(item.Key, textBodyPart, false, true);
                         textBodyPart.Clear();
                     };                    
-                }                
+                }
+                if (pictureLink.Count != 0)
+                {
+                    TextBodyPart textBodyPart = new TextBodyPart(document);
+                    WParagraph paragraph = new WParagraph(document);
+                    textBodyPart.BodyItems.Add(paragraph);
+                    foreach (string link in pictureLink)
+                    {
+                        using (Bitmap bmp = new Bitmap(link))
+                        {
+                            paragraph.AppendPicture(bmp);
+                        }
+                    }
+                    document.Replace("<mapDeffect>", textBodyPart, false, true);
+                    textBodyPart.Clear();
+                }
+                if (GroupInGropupsDefect.Count != 0)
+                {
+                    TextBodyPart textBodyPart = new TextBodyPart(document);
+                    WParagraph paragraph = new WParagraph(document);
+                    textBodyPart.BodyItems.Add(paragraph);
+                    int index = 1;
+                    foreach(var row in GroupInGropupsDefect)
+                    {                        
+                        paragraph.ParagraphFormat.Tabs.AddTab(0, TabJustification.Left, TabLeader.Single);
+                        paragraph.AppendText("\n\tДефект №" + index + "\n\t" + "расположение по длине: " + row.min_X_MM + "..." + row.max_X_MM + " мм;\n" +
+                            "\tрасположение по углу:" + row.min_Fi + "..." + row.max_Fi + ";\n" +
+                            "\tусловная площадь "+ row.square +" мм2.\n");                        
+                    }
+                    paragraph.ParagraphFormat.AfterSpacing = 0;
+                    paragraph.ParagraphFormat.BeforeSpacing = 0;                    
+                    //paragraph.ParagraphFormat.FirstLineIndent = 10f;
+                    //paragraph.ParagraphFormat.LineSpacing = 10f;
+                    document.Replace("<groupsDeffect>", textBodyPart, false, true);
+                    textBodyPart.Clear();
+                }
                 document.Save(newFileName);
             }
         }
-        private void createTextBodyPart(WordDocument document, string key, string value)
-        {            
-            
+        
+        private void createExcell(List<DefectRow> dataDefectArray)
+        {
+            string fileName = "C:\\Temp\\Имя файла.xls";
+            //Объявляем переменную приложения Excel 
+            Excel.Application application = null;
+            //объявляем переменные для коллекции рабочих книг 
+            //и одной рабочей книги
+            Excel.Workbooks workbooks = null;
+            Excel.Workbook workbook = null;
+            try
+            {
+
+            }
+            finally
+            {
+
+            }
         }
     }
 }

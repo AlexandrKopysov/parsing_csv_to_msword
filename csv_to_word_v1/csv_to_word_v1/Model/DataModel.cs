@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Text;
 
 namespace csv_to_word_v1.Model
@@ -94,5 +96,13 @@ namespace csv_to_word_v1.Model
         /// Массив строк
         /// </summary>
         public List<SectionModel> sectionArray { get; set; }
+        /// <summary>
+        /// Сгруппированный массив деффектов
+        /// </summary>
+        public List<GroupDefectRow> GroupInGropupsDefect { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> Picture { get; set; }
     }
 }

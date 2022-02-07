@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace csv_to_word_v1
 {
     public partial class scanPasport : Form
@@ -34,7 +35,8 @@ namespace csv_to_word_v1
             {
                 data.fileCsv = csvFile.FileName;
             }
-            var word = new Word(data.fileTemplate);            
+            var word = new Word(data.fileTemplate);
+            //var excel = new ExcellClass(data.dataDefectArray);
             Сsv csv = new Сsv(data);
             data = csv.Import();
 
@@ -62,7 +64,11 @@ namespace csv_to_word_v1
                 {"<owner>", data.owner}
             };
 
-            word.Process(items, filesItems, charts);
+
+
+            word.Process(items, filesItems, charts,data.Picture,data.GroupInGropupsDefect,data.dataDefectArray);            
+
+
         }
 
         private void fileScanGeometry_button_Click(object sender, EventArgs e)
