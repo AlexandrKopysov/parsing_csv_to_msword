@@ -4595,23 +4595,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\bayze\\.nuget\\packages\\": {},
+    "C:\\Users\\101499\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Git\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
+      "projectUniqueName": "D:\\Project\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
       "projectName": "csv_to_word_v1",
-      "projectPath": "D:\\Git\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
-      "packagesPath": "C:\\Users\\bayze\\.nuget\\packages\\",
-      "outputPath": "D:\\Git\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\obj\\",
+      "projectPath": "D:\\Project\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\csv_to_word_v1.csproj",
+      "packagesPath": "C:\\Users\\101499\\.nuget\\packages\\",
+      "outputPath": "D:\\Project\\parsing_csv_to_msword\\csv_to_word_v1\\csv_to_word_v1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\bayze\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\101499\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4669,7 +4669,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.210\\RuntimeIdentifierGraph.json"
       }
     }
   }

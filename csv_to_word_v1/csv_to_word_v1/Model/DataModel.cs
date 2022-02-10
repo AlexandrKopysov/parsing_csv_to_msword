@@ -104,5 +104,25 @@ namespace csv_to_word_v1.Model
         /// 
         /// </summary>
         public List<string> Picture { get; set; }
+        /// <summary>
+        /// Ссылки на изображения срезов
+        /// </summary>
+        public List<string> squereSlicePictures { get; set; }
+        /// <summary>
+        /// Галочка формирования Excell
+        /// </summary>
+        public bool createExcell { get; set; }
+        /// <summary>
+        /// Максимальная плозадь среза
+        /// </summary>
+        public string squereSliceMax { get; set; }
+        /// <summary>
+        /// Минимальная плозадь среза
+        /// </summary>
+        public string squereSliceMin { get; set; }
+        /// <summary>
+        /// Медианная площадь среза
+        /// </summary>
+        public string squereSliceMediana { get; set; }
     }
 }

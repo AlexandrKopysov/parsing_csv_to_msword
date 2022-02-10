@@ -13,6 +13,8 @@ using csv_to_word_v1.Model;
 using System.Drawing.Imaging;
 using OfficeOpenXml;
 using IronXL;
+using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace csv_to_word_v1.Services
 {
@@ -35,10 +37,14 @@ namespace csv_to_word_v1.Services
         internal bool Process(
             Dictionary<string, string> items, 
             Dictionary<string, string> filesItems, 
-            Dictionary<string, Array> charts,
-            List<string> ictureLink,
+            //Dictionary<string, Array> charts,
+            List<string> pictureLink,
             List<GroupDefectRow> GroupInGropupsDefect,
-            List<DefectRow> dataDefectArray)
+            List<DefectRow> dataDefectArray,            
+            string pasportNumber,
+            bool excelLoad,
+            List<string> squarePicture 
+            )
         {
             WordOffice.Application app = null;
             
@@ -74,13 +80,18 @@ namespace csv_to_word_v1.Services
                 }
 
                 string newFileName = Path.Combine(_fileInfo.DirectoryName,
-                    DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " +  _fileInfo.Name);
-
+                    DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " + pasportNumber + ".docx");
+                string newFileNameForXls = Path.Combine(_fileInfo.DirectoryName,
+                    DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " + pasportNumber+ " Карта дефектов" + ".xlsx");
                 app.ActiveDocument.SaveAs2(newFileName);
                 app.ActiveDocument.Close();
 
-                AddDopInformation(filesItems, newFileName, ictureLink , GroupInGropupsDefect);
-                createExcell(dataDefectArray);
+                AddDopInformation(filesItems, newFileName, pictureLink , GroupInGropupsDefect , squarePicture);
+                if (excelLoad)
+                {
+                    createExcell(dataDefectArray, newFileNameForXls);
+                };
+
                 //addPicture()
                 //addChartsToFile(charts, newFileName);
 
@@ -162,11 +173,35 @@ namespace csv_to_word_v1.Services
             Dictionary<string, string> items, 
             string newFileName,
             List<string> pictureLink,
-            List<GroupDefectRow> GroupInGropupsDefect)
+            List<GroupDefectRow> GroupInGropupsDefect,
+            List<string> squarePicture)
         {
 
             using (WordDocument document = new WordDocument(newFileName, FormatType.Docx))
-            {                
+            {
+                
+                if (squarePicture != null)
+                {
+                    if (squarePicture.Count != 0)
+                    {
+                        int index = 1;
+                        foreach (var picture in squarePicture)
+                        {
+                            TextBodyPart textBodyPart = new TextBodyPart(document);
+                            WParagraph paragraph = new WParagraph(document);
+                            textBodyPart.BodyItems.Add(paragraph);
+                            using (Bitmap bmp = new Bitmap(picture))
+                            {
+                                Bitmap bmp1 = new Bitmap(bmp, new Size(190, 160));
+                                paragraph.AppendPicture(bmp1);
+                            }
+                            document.Replace("<squereSlicePictures_" + index + ">", textBodyPart, false, true);
+                            textBodyPart.Clear();
+                            index++;
+                        }
+                    }
+                }
+                                
                 foreach(var item in items)
                 {            
                     if (items[item.Key] != null)
@@ -185,61 +220,125 @@ namespace csv_to_word_v1.Services
                         textBodyPart.Clear();
                     };                    
                 }
-                if (pictureLink.Count != 0)
+
+                if (pictureLink != null)
                 {
-                    TextBodyPart textBodyPart = new TextBodyPart(document);
-                    WParagraph paragraph = new WParagraph(document);
-                    textBodyPart.BodyItems.Add(paragraph);
-                    foreach (string link in pictureLink)
+                    if (pictureLink.Count != 0)
                     {
-                        using (Bitmap bmp = new Bitmap(link))
+                        TextBodyPart textBodyPart = new TextBodyPart(document);
+                        WParagraph paragraph = new WParagraph(document);
+                        textBodyPart.BodyItems.Add(paragraph);
+                        foreach (string link in pictureLink)
                         {
-                            paragraph.AppendPicture(bmp);
+                            using (Bitmap bmp = new Bitmap(link))
+                            {
+                                Bitmap bmp1 = new Bitmap(bmp, new Size(615, 70));
+                                paragraph.AppendPicture(bmp1);
+                            }
                         }
+                        document.Replace("<mapDeffect>", textBodyPart, false, true);
+                        textBodyPart.Clear();
                     }
-                    document.Replace("<mapDeffect>", textBodyPart, false, true);
-                    textBodyPart.Clear();
                 }
-                if (GroupInGropupsDefect.Count != 0)
+                if (GroupInGropupsDefect != null)
                 {
-                    TextBodyPart textBodyPart = new TextBodyPart(document);
-                    WParagraph paragraph = new WParagraph(document);
-                    textBodyPart.BodyItems.Add(paragraph);
-                    int index = 1;
-                    foreach(var row in GroupInGropupsDefect)
-                    {                        
-                        paragraph.ParagraphFormat.Tabs.AddTab(0, TabJustification.Left, TabLeader.Single);
-                        paragraph.AppendText("\n\tДефект №" + index + "\n\t" + "расположение по длине: " + row.min_X_MM + "..." + row.max_X_MM + " мм;\n" +
-                            "\tрасположение по углу:" + row.min_Fi + "..." + row.max_Fi + ";\n" +
-                            "\tусловная площадь "+ row.square +" мм2.\n");                        
+                    if (GroupInGropupsDefect.Count != 0)
+                    {
+                        TextBodyPart textBodyPart = new TextBodyPart(document);
+                        WParagraph paragraph = new WParagraph(document);
+                        textBodyPart.BodyItems.Add(paragraph);
+                        int index = 1;
+                        foreach (var row in GroupInGropupsDefect)
+                        {
+                            paragraph.ParagraphFormat.Tabs.AddTab(0, TabJustification.Left, TabLeader.Single);
+                            paragraph.AppendText("\n\tДефект №" + index + "\n\t" + "расположение по длине: " + row.min_X_MM + "..." + row.max_X_MM + " мм;\n" +
+                                "\tрасположение по углу:" + row.min_Fi + "..." + row.max_Fi + ";\n" +
+                                "\tусловная площадь " + row.square + " мм2.\n");
+                            index++;
+                        }
+                        paragraph.ParagraphFormat.AfterSpacing = 0;
+                        paragraph.ParagraphFormat.BeforeSpacing = 0;
+                        //paragraph.ParagraphFormat.FirstLineIndent = 10f;
+                        //paragraph.ParagraphFormat.LineSpacing = 10f;
+                        document.Replace("<groupsDeffect>", textBodyPart, false, true);
+                        textBodyPart.Clear();
                     }
-                    paragraph.ParagraphFormat.AfterSpacing = 0;
-                    paragraph.ParagraphFormat.BeforeSpacing = 0;                    
-                    //paragraph.ParagraphFormat.FirstLineIndent = 10f;
-                    //paragraph.ParagraphFormat.LineSpacing = 10f;
-                    document.Replace("<groupsDeffect>", textBodyPart, false, true);
-                    textBodyPart.Clear();
                 }
+                
                 document.Save(newFileName);
             }
         }
         
-        private void createExcell(List<DefectRow> dataDefectArray)
-        {
-            string fileName = "C:\\Temp\\Имя файла.xls";
-            //Объявляем переменную приложения Excel 
+        private void createExcell(List<DefectRow> dataDefectArray, string newFileName)
+        {            
             Excel.Application application = null;
-            //объявляем переменные для коллекции рабочих книг 
-            //и одной рабочей книги
             Excel.Workbooks workbooks = null;
             Excel.Workbook workbook = null;
+            Excel.Sheets worksheets = null;
+            Excel.Worksheet worksheet = null;
+            //переменная для хранения диапазона ячеек
+            //в нашем случае - это будет одна ячейка
+            Excel.Range cell = null;
             try
             {
-
+                application = new Excel.Application
+                {
+                    Visible = false
+                };
+                workbooks = application.Workbooks;
+                workbook = workbooks.Add();
+                worksheets = workbook.Worksheets; //получаем доступ к коллекции рабочих листов
+                worksheet = worksheets.Item[1];//получаем доступ к первому листу
+                var x_MM_Min = dataDefectArray.Select(x => x.X_MM).Min();
+                var x_MM_Max = dataDefectArray.Select(x => x.X_MM).Max();
+                var round = x_MM_Max - x_MM_Min;
+                for (int i = 0; i <= round; i++)
+                {
+                    cell = worksheet.Cells[i + 2 , 1];
+                    cell.Value = x_MM_Min + i;
+                    cell.BorderAround2();
+                }
+                for (int i = 2; i <= 360; i++)
+                {
+                    cell = worksheet.Cells[1 ,i];
+                    cell.Value = i-2;
+                    cell.BorderAround2();
+                }
+                workbook.SaveAs(newFileName);
+                var groupOnX_MM = dataDefectArray.GroupBy(x => x.X_MM).ToArray();
+                int index_X_MM = 1;
+                foreach (var row in groupOnX_MM)
+                {                    
+                    index_X_MM++;
+                    int keyX_MM = (int)row.Key;
+                    foreach (var rowFi in row)
+                    {
+                        //Console.WriteLine(rowFi);
+                        Excel.Range cellSecond = null;                        
+                        worksheet.Cells[index_X_MM, rowFi.Fi + 2] = rowFi.Brightness.ToString();
+                        cellSecond = worksheet.Cells[index_X_MM, rowFi.Fi + 2];
+                        int color = Convert.ToInt32(255 - (255 * rowFi.Brightness));
+                        cellSecond.Interior.Color = System.Drawing.Color.FromArgb(255, color, color);
+                    }
+                    workbook.Save();                    
+                }
+                workbook.Save();                
+                application.Quit();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                application.Quit();
             }
             finally
             {
-
+                //освобождаем память, занятую объектами
+                application.Quit();
+                Marshal.ReleaseComObject(worksheet);
+                Marshal.ReleaseComObject(worksheets);
+                Marshal.ReleaseComObject(workbook);
+                Marshal.ReleaseComObject(workbooks);
+                Marshal.ReleaseComObject(application);
             }
         }
     }

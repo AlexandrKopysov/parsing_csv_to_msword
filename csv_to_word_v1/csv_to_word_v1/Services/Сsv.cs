@@ -32,22 +32,18 @@ namespace csv_to_word_v1.Services
         public DataModel Import()
         {
             getParametersStatic();            
-
             getParametersRows();
-            getParametersDeffectRows();
-
             groupByX_MM();
-            //sectionDeffectArray = groupDeffectsOnFi();
-            sectionDefectArray = groupDeffectsOnX_MM();
-            data.GroupInGropupsDefect = getGroupInGropupsDefect();
 
-            listDefectRowArray = groupDefectsForGroup(sectionDefectArray);
+            if (data.fileScanDefect != null)
+            {
+                getParametersDeffectRows();                
+                sectionDefectArray = groupDeffectsOnX_MM();
+                data.GroupInGropupsDefect = getGroupInGropupsDefect();
+                listDefectRowArray = groupDefectsForGroup(sectionDefectArray);
+                data.Picture = GroupImg(sectionDefectArray.Count());
+            }            
 
-            data.Picture = GroupImg(sectionDefectArray.Count());
-
-
-
-            //CreateGridImage(360, sectionDeffectArray.Count(),0,0,0,0,2);            
             return data;
         }
         /// <summary>
@@ -79,12 +75,12 @@ namespace csv_to_word_v1.Services
                 {
                     fileIndex++;
                     pointFinish = indexForward-1;
-                    links.Add(CreateGridImage(fileIndex, 360, sectionDefectArray.Count(), pointStart, pointFinish, maxYCount, 2));
+                    links.Add(CreateGridImage(fileIndex, 360, sectionDefectArray.Count(), pointStart, pointFinish, maxYCount, 10));
                     pointStart = indexForward;                    
                 }
             }
             fileIndex++;
-            links.Add(CreateGridImage(fileIndex, 360, sectionDefectArray.Count(), pointStart, maxYCells-1, maxYCount, 2));
+            links.Add(CreateGridImage(fileIndex, 360, sectionDefectArray.Count(), pointStart, maxYCells-1, maxYCount, 10));
             return links;
         }
 
@@ -132,16 +128,16 @@ namespace csv_to_word_v1.Services
                     }                    
 
                     //Draw horizontal lines
-                    for (int i = 0; i <= maxXCells; i++)
-                    {
-                        g.DrawLine(pen, (i * boxSize), 0, i * boxSize, boxSize * maxYCells);
-                    }
+                    //for (int i = 0; i <= maxXCells; i++)
+                    //{
+                    //    g.DrawLine(pen, (i * boxSize), 0, i * boxSize, boxSize * maxYCells);
+                    //}
 
-                    //Draw vertical lines            
-                    for (int i = 0; i <= maxYCells; i++)
-                    {
-                        g.DrawLine(pen, 0, (i * boxSize), boxSize * maxXCells, i * boxSize);
-                    }
+                    ////Draw vertical lines            
+                    //for (int i = 0; i <= maxYCells; i++)
+                    //{
+                    //    g.DrawLine(pen, 0, (i * boxSize), boxSize * maxXCells, i * boxSize);
+                    //}
                 }
                 using (var memStream = new MemoryStream())
                 {

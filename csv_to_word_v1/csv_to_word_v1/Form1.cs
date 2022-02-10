@@ -35,6 +35,12 @@ namespace csv_to_word_v1
             {
                 data.fileCsv = csvFile.FileName;
             }
+
+            data.squereSliceMax = square_1.Text;
+            data.squereSliceMin = square_2.Text;
+            data.squereSliceMediana = square_3.Text;
+            data.createExcell = Excell.Checked;
+
             var word = new Word(data.fileTemplate);
             //var excel = new ExcellClass(data.dataDefectArray);
             Сsv csv = new Сsv(data);
@@ -46,29 +52,39 @@ namespace csv_to_word_v1
                 {"<fileScandeffect>", data.fileScanDefect},
                 {"<fileSpectr>", data.fileSpectr},
             };
+            
+            //var charts = new Dictionary<string, Array>
+            //{
+            //    {"<chart_1>", data.sectionArray.Select(x => x.averagInSection).ToArray()}
+            //};
 
-            var charts = new Dictionary<string, Array>
-            {
-                {"<chart_1>", data.sectionArray.Select(x => x.averagInSection).ToArray()}                
-            };
 
             var items = new Dictionary<string, string>
             {
-                {"<pasportNumber>", data.pasportNumber},
+                {"<pasportNumber>", data.pasportNumber},                
                 {"<averageDiametr>", data.averageDiametr.ToString()},
                 {"<averageNonRoundless>", data.averageNonRoundless.ToString()},
                 {"<averageDeviationDiametr>", data.averageDeviationDiametr.ToString()},
                 {"<dMax>", data.dMax.ToString()},
-                {"<dMin>", data.dMin.ToString()},                
-                {"<dateTime>", data.dateTime},
+                {"<dMin>", data.dMin.ToString()},
+                {"<squereSliceMax>",  data.squereSliceMax},
+                {"<squereSliceMin>", data.squereSliceMin},
+                {"<squereSliceMediana>", data.squereSliceMediana},
+                {"<dateTime_Scan>", data.dateTime},
+                {"<dateTime_Form>", DateTime.Now.ToString()},
                 {"<owner>", data.owner}
             };
-
-
-
-            word.Process(items, filesItems, charts,data.Picture,data.GroupInGropupsDefect,data.dataDefectArray);            
-
-
+            
+            word.Process(
+                items, 
+                filesItems, 
+                //charts,
+                data.Picture,
+                data.GroupInGropupsDefect,
+                data.dataDefectArray,
+                data.pasportNumber,
+                data.createExcell,
+                data.squereSlicePictures);
         }
 
         private void fileScanGeometry_button_Click(object sender, EventArgs e)
@@ -96,6 +112,36 @@ namespace csv_to_word_v1
             {
                 data.fileSpectr = ofd.FileName;                
             }
+        }
+
+        private void scanPasport_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Image_Click(object sender, EventArgs e)
+        {
+            data.squereSlicePictures = new List<string>();
+            OpenFileDialog file1 = new OpenFileDialog();
+            if (file1.ShowDialog() == DialogResult.OK)
+            {
+                data.squereSlicePictures.Add(file1.FileName);                
+            }
+            OpenFileDialog file2 = new OpenFileDialog();
+            if (file2.ShowDialog() == DialogResult.OK)
+            {
+                data.squereSlicePictures.Add(file2.FileName);
+            }
+            OpenFileDialog file3 = new OpenFileDialog();
+            if (file3.ShowDialog() == DialogResult.OK)
+            {
+                data.squereSlicePictures.Add(file3.FileName);
+            }
+        }
+
+        private void Excell_CheckedChanged(object sender, EventArgs e)
+        {
+            data.createExcell = Excell.Checked;
         }
     }
 }

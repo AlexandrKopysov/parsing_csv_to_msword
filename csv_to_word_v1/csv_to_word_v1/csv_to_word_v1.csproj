@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="5.8.6" />
     <PackageReference Include="IronXL.Excel" Version="2021.12.0" />
     <PackageReference Include="Syncfusion.DocIO.Wpf" Version="19.4.0.48" />
   </ItemGroup>
