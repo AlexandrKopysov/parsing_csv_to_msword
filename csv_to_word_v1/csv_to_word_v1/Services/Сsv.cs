@@ -1,9 +1,6 @@
 ﻿using csv_to_word_v1.Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using static csv_to_word_v1.Model.DataModel;
-using static csv_to_word_v1.Model.Row;
 using Microsoft.VisualBasic.FileIO;
 using System.Linq;
 using System.Drawing;
@@ -143,8 +140,11 @@ namespace csv_to_word_v1.Services
                 {
                     bmp.Save(memStream, ImageFormat.Jpeg);
                     var img = Image.FromStream(memStream);
-                    img.Save("C:\\Temp\\file_"+ fileIndex .ToString() + ".png");
-                    return "C:\\Temp\\file_" + fileIndex.ToString() + ".png";
+                    FileInfo _fileInfo = new FileInfo(data.fileCsv);
+                    string newFileName = Path.Combine(_fileInfo.DirectoryName,
+                        DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " + data.pasportNumber + " Карта дефектов_" + fileIndex + ".png");
+                    img.Save(newFileName);
+                    return newFileName;
                 }                
             }            
         }
