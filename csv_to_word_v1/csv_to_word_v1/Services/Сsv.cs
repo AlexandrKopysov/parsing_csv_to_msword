@@ -6,6 +6,7 @@ using System.Linq;
 using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Globalization;
 
 namespace csv_to_word_v1.Services
 {
@@ -435,10 +436,10 @@ namespace csv_to_word_v1.Services
                     {
                         Row row = new Row();
                         row.X_MM = int.Parse(fields[0]);
-                        row.Fi = float.Parse(fields[1]);
-                        row.Diameter = float.Parse(fields[2]);
-                        row.UpPointY_PX = float.Parse(fields[3]);
-                        row.DownPointY_PX = float.Parse(fields[4]);
+                        row.Fi = float.Parse(fields[1].Replace(",","."), CultureInfo.InvariantCulture);
+                        row.Diameter = float.Parse(fields[2].Replace(",", "."), CultureInfo.InvariantCulture);
+                        row.UpPointY_PX = float.Parse(fields[3].Replace(",", "."), CultureInfo.InvariantCulture);
+                        row.DownPointY_PX = float.Parse(fields[4].Replace(",", "."), CultureInfo.InvariantCulture);
                         rows.Add(row);
                     }
                     rowIndex++;
@@ -468,8 +469,8 @@ namespace csv_to_word_v1.Services
                     {
                         DefectRow row = new DefectRow();
                         row.X_MM = int.Parse(fields[0]);
-                        row.Fi = float.Parse(fields[1]);
-                        row.Brightness = float.Parse(fields[2]);                        
+                        row.Fi = float.Parse(fields[1].Replace(",","."), CultureInfo.InvariantCulture);
+                        row.Brightness = float.Parse(fields[2].Replace(",", "."), CultureInfo.InvariantCulture);
                         rows.Add(row);
                     }
                     rowIndex++;

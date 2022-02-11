@@ -86,16 +86,15 @@ namespace csv_to_word_v1.Services
                 string newFileNameForXls = Path.Combine(_fileInfo.DirectoryName,
                     DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " + pasportNumber+ " Карта дефектов" + ".xlsx");
                 app.ActiveDocument.SaveAs2(newFileName);
-                app.ActiveDocument.Close();                
-
+                app.ActiveDocument.Close();
+                AddDopInformation(filesItems, newFileName, pictureLink, GroupInGropupsDefect, squarePicture);
                 //Удаляем верхний колонтитул                
-                app.Documents.Open(newFileName);
+                app.Documents.Open(newFileName);                
                 WordOffice.HeaderFooter hdr = app.ActiveDocument.Sections[1].Headers[WordOffice.WdHeaderFooterIndex.wdHeaderFooterPrimary];
                 hdr.Range.Delete();
                 app.ActiveDocument.SaveAs2(newFileName);
                 app.ActiveDocument.Close();
-
-                AddDopInformation(filesItems, newFileName, pictureLink, GroupInGropupsDefect, squarePicture);
+                
                 if (excelLoad)
                 {
                     createExcell(dataDefectArray, newFileNameForXls);
@@ -322,8 +321,7 @@ namespace csv_to_word_v1.Services
                     }
                     workbook.Save();                    
                 }
-                workbook.Save();
-                workbook.Close();                
+                workbook.Save();                
             }
             catch (Exception e)
             {
@@ -334,9 +332,9 @@ namespace csv_to_word_v1.Services
                 //освобождаем память, занятую объектами
                 if(application != null)
                 {
-                    //application.Quit();
+                    application.Quit();
                     Marshal.FinalReleaseComObject(application);
-                }
+                }                           
                 Marshal.ReleaseComObject(worksheet);
                 Marshal.ReleaseComObject(worksheets);
                 Marshal.ReleaseComObject(workbook);
