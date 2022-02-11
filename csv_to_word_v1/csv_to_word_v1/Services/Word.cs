@@ -79,28 +79,27 @@ namespace csv_to_word_v1.Services
                     );
                 }
 
+                //string newFileName = Path.Combine("E:\\",
+                //    DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " + pasportNumber + ".docx");
                 string newFileName = Path.Combine(_fileInfo.DirectoryName,
                     DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " + pasportNumber + ".docx");
                 string newFileNameForXls = Path.Combine(_fileInfo.DirectoryName,
                     DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss") + " " + pasportNumber+ " Карта дефектов" + ".xlsx");
                 app.ActiveDocument.SaveAs2(newFileName);
-                app.ActiveDocument.Close();
-
-                AddDopInformation(filesItems, newFileName, pictureLink , GroupInGropupsDefect , squarePicture);
-                if (excelLoad)
-                {
-                    createExcell(dataDefectArray, newFileNameForXls);
-                };
-
-                //addPicture()
-                //addChartsToFile(charts, newFileName);
+                app.ActiveDocument.Close();                
 
                 //Удаляем верхний колонтитул                
                 app.Documents.Open(newFileName);
                 WordOffice.HeaderFooter hdr = app.ActiveDocument.Sections[1].Headers[WordOffice.WdHeaderFooterIndex.wdHeaderFooterPrimary];
                 hdr.Range.Delete();
                 app.ActiveDocument.SaveAs2(newFileName);
-                app.ActiveDocument.Close();                
+                app.ActiveDocument.Close();
+
+                AddDopInformation(filesItems, newFileName, pictureLink, GroupInGropupsDefect, squarePicture);
+                if (excelLoad)
+                {
+                    createExcell(dataDefectArray, newFileNameForXls);
+                };
 
                 MessageBox.Show("Файл успешно сформирован");
                 return true;
@@ -115,8 +114,9 @@ namespace csv_to_word_v1.Services
             {
                 if (app != null)
                 {
-                    app.Quit();
-                }                
+                    //app.Quit();
+                    Marshal.FinalReleaseComObject(app);                                        
+                }
             }
         }
         /// <summary>
@@ -322,18 +322,21 @@ namespace csv_to_word_v1.Services
                     }
                     workbook.Save();                    
                 }
-                workbook.Save();                
-                application.Quit();
+                workbook.Save();
+                workbook.Close();                
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                application.Quit();
+                Console.WriteLine(e);                
             }
             finally
             {
                 //освобождаем память, занятую объектами
-                application.Quit();
+                if(application != null)
+                {
+                    //application.Quit();
+                    Marshal.FinalReleaseComObject(application);
+                }
                 Marshal.ReleaseComObject(worksheet);
                 Marshal.ReleaseComObject(worksheets);
                 Marshal.ReleaseComObject(workbook);
